@@ -2,6 +2,8 @@
 
 namespace Snow\Router;
 
+use Snow\Router;
+
 class Redirect
 {
     /**
