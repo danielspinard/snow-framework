@@ -1,8 +1,6 @@
 <?php
 
-namespace Snow\Router;
-
-use Snow\Router;
+namespace Snow;
 
 class Redirect
 {
