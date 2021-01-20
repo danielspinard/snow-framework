@@ -1,8 +1,8 @@
 <?php
 
-namespace Snow;
+namespace Snow\Router;
 
-use Snow\Router\{Router, Redirect};
+use Snow\Router;
 
 class Exception
 {
@@ -55,7 +55,7 @@ class Exception
             if(is_null($httpError))
                 return $router->redirect('error.http', ['httpErrorCode' => 404]);
 
-            return include 'Exception/error.view.min.php';
+            return include 'view/error.view.min.php';
         }, 'error.http');
     }
 }
