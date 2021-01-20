@@ -1,10 +1,9 @@
 <?php
 
-namespace Snow\Router;
+namespace Snow;
 
 use CoffeeCode\Router\Dispatch as RouterComponent;
-use Snow\Base\ControllerHttp;
-use Snow\Exception;
+use Snow\Router\Exception;
 
 class Router extends RouterComponent
 {
