@@ -32,6 +32,20 @@ if (filter_var(env('APP_DEBUG'), FILTER_VALIDATE_BOOLEAN) == true)
 
 /**
  * |--------------------------------------------------------------------------
+ * | Load the defines needed to establish a connection to the datalayer
+ * |--------------------------------------------------------------------------
+ */
+(Snow\Database::define(
+    env('DB_CONNECTION', 'mysql'),
+    env('DB_HOST', '127.0.0.1'),
+    env('DB_PORT', '3306'),
+    env('DB_DATABASE', 'test'),
+    env('DB_USERNAME', 'root'),
+    env('DB_PASSWORD', 'root')
+));
+
+/**
+ * |--------------------------------------------------------------------------
  * | Configure the time zone to be used.
  * |--------------------------------------------------------------------------
  */
@@ -42,7 +56,6 @@ date_default_timezone_set(env('APP_TIMEZONE'));
  * | Load the application routes
  * |--------------------------------------------------------------------------
  */
-
 $router = new Snow\Router(env('APP_URL'));
 
 require __DIR__ . '/../routes/web.php';
