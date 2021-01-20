@@ -51,6 +51,13 @@ if (filter_var(env('APP_DEBUG'), FILTER_VALIDATE_BOOLEAN) == true)
  */
 date_default_timezone_set(env('APP_TIMEZONE'));
 
+/**
+ * |--------------------------------------------------------------------------
+ * | Start safely and optimally session
+ * |--------------------------------------------------------------------------
+ */
+(new Snow\Session());
+
 /*
  * |--------------------------------------------------------------------------
  * | Load the application routes
