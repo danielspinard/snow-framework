@@ -2,10 +2,9 @@
 
 namespace App\Controllers;
 
-class TestController
+class WebController
 {
     public function debug()
     {
-        print_r($_SERVER);
     }
 }
