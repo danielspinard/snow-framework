@@ -47,7 +47,6 @@ class Exception
     public static function handleRouterHttpError(Router $router)
     {
         $router->group("error");
-
         $router->get("/{httpErrorCode}", function ($data) use ($router) {
             $code = (int) $data['httpErrorCode'];
             $httpError = (self::getHttpConst($code));
@@ -55,7 +54,26 @@ class Exception
             if(is_null($httpError))
                 return $router->redirect('error.http', ['httpErrorCode' => 404]);
 
-            return include 'view/error.view.min.php';
+            return self::errorView($httpError);
         }, 'error.http');
+    }
+
+    /**
+     * @param Router $router
+     * @return void
+     */
+    public static function dispatchRouterHttpError(Router $router)
+    {
+        if ($router->error())
+            return $router->redirect('error.http', ['httpErrorCode' => $router->error()]);
+    }
+
+    /**
+     * @param array $httpError
+     * @return void
+     */
+    private static function errorView(array $httpError)
+    {
+        include 'view/error.view.min.php';
     }
 }
