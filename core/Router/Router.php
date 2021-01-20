@@ -1,0 +1,79 @@
+<?php
+
+namespace Snow\Router;
+
+use CoffeeCode\Router\Dispatch as RouterComponent;
+use Snow\Base\ControllerHttp;
+use Snow\Exception;
+
+class Router extends RouterComponent
+{
+    /**
+     * @param string $appUrl
+     * @param null|string $separator
+     */
+    public function __construct(string $appUrl, ?string $separator = "@")
+    {
+        parent::__construct($appUrl, $separator);
+    }
+
+    /**
+     * @param string $route
+     * @param $handler
+     * @param string|null $name
+     */
+    public function post(string $route, $handler, string $name = null): void
+    {
+        $this->addRoute('POST', $route, $handler, $name);
+    }
+
+    /**
+     * @param string $route
+     * @param $handler
+     * @param string|null $name
+     */
+    public function get(string $route, $handler, string $name = null): void
+    {
+        $this->addRoute('GET', $route, $handler, $name);
+    }
+
+    /**
+     * @param string $route
+     * @param $handler
+     * @param string|null $name
+     */
+    public function put(string $route, $handler, string $name = null): void
+    {
+        $this->addRoute('PUT', $route, $handler, $name);
+    }
+
+    /**
+     * @param string $route
+     * @param $handler
+     * @param string|null $name
+     */
+    public function patch(string $route, $handler, string $name = null): void
+    {
+        $this->addRoute('PATCH', $route, $handler, $name);
+    }
+
+    /**
+     * @param string $route
+     * @param $handler
+     * @param string|null $name
+     */
+    public function delete(string $route, $handler, string $name = null): void
+    {
+        $this->addRoute('DELETE', $route, $handler, $name);
+    }
+
+    public function run()
+    {
+        Exception::handleRouterHttpError($this);
+
+        $this->dispatch();
+
+        if ($this->error())
+            return $this->redirect('error/' . $this->error());
+    }
+}
