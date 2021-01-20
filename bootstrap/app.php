@@ -44,7 +44,7 @@ date_default_timezone_set(env('APP_TIMEZONE'));
  * |--------------------------------------------------------------------------
  */
 
-$router = new Snow\Router\Router(env('APP_URL'));
+$router = new Snow\Router(env('APP_URL'));
 
 require __DIR__ . '/../routes/web.php';
 require __DIR__ . '/../routes/api.php';
