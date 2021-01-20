@@ -7,6 +7,7 @@ use function session_save_path;
 use function dirname;
 use function session_start;
 use function session_regenerate_id;
+use function random_bytes;
 
 class Session
 {
@@ -26,6 +27,7 @@ class Session
     {
         if (!empty($_SESSION[$name]))
             return $_SESSION[$name];
+
         return null;
     }
 
@@ -35,7 +37,7 @@ class Session
      */
     public function __isset($name): bool
     {
-        $this->has($name);
+        return $this->has($name);
     }
 
     /**
@@ -92,5 +94,13 @@ class Session
     {
         session_destroy();
         return $this;
+    }
+
+    /**
+     * CSRF Token
+     */
+    public function csrf(): void
+    {
+        $_SESSION['csrf_token'] = base64_encode(random_bytes(20));
     }
 }
