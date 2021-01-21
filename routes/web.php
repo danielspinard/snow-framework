@@ -1,4 +1,4 @@
 <?php
 
 $router->namespace("App\Controllers")->group(null);
-$router->get("/", "WebController@debug");
+$router->get("/", "WebController@index");
