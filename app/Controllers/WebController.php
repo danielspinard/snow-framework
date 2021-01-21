@@ -6,7 +6,7 @@ use App\Models\PostModel;
 
 class WebController
 {
-    public function debug()
+    public function index()
     {
         $posts = (new PostModel())->find()->order('title')->fetch(true) ?? [];
         
