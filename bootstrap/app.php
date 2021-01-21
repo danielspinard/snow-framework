@@ -27,7 +27,7 @@ $repository = Dotenv\Repository\RepositoryBuilder::createWithNoAdapters()
  * | The ErrorHandler component provides tools to manage errors and ease debugging PHP code.
  * |--------------------------------------------------------------------------
  */
-if (filter_var(env('APP_DEBUG'), FILTER_VALIDATE_BOOLEAN) == true)
+if (appDebug())
     (Symfony\Component\ErrorHandler\Debug::enable());
 
 /**
