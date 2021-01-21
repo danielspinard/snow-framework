@@ -6,5 +6,6 @@ class WebController
 {
     public function debug()
     {
+        return view('welcome');
     }
 }
