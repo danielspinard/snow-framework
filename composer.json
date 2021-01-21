@@ -19,6 +19,7 @@
         "vlucas/phpdotenv": "5.2.*",
         "symfony/error-handler": "5.2.*",
         "coffeecode/router": "1.0.*",
-        "coffeecode/datalayer": "1.1.*"
+        "coffeecode/datalayer": "1.1.*",
+        "eftec/bladeone": "3.49.*"
     }
 }
