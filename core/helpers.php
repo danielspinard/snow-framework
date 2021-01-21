@@ -16,6 +16,16 @@ if (!function_exists('env')) {
     }
 }
 
+if (!function_exists('appDebug')) {
+    /**
+     * @return bool
+     */
+    function appDebug(): bool
+    {
+        return filter_var(env('APP_DEBUG'), FILTER_VALIDATE_BOOLEAN);
+    }
+}
+
 if (!function_exists('session')) {
     /**
      * @param string $name
