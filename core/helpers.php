@@ -1,6 +1,7 @@
 <?php
 
 use Snow\Session;
+use Snow\Engine;
 
 if (!function_exists('env')) {
     /**
@@ -23,6 +24,16 @@ if (!function_exists('appDebug')) {
     function appDebug(): bool
     {
         return filter_var(env('APP_DEBUG'), FILTER_VALIDATE_BOOLEAN);
+    }
+}
+
+if (!function_exists('view')) {
+    /**
+     * @return bool
+     */
+    function view(string $view, ?array $data = []): void
+    {
+        echo (new Engine())->render('views.' . $view, $data);
     }
 }
 
