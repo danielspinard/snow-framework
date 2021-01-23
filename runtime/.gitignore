@@ -1,3 +1,6 @@
 /session/*
 /compile/*
 /upload/*
+!/session/.gitkeep
+!/compile/.gitkeep
+!/upload/.gitkeep
