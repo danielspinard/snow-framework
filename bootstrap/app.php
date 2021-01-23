@@ -35,8 +35,8 @@ if (appDebug())
  * | Load the defines needed to establish a connection to the datalayer
  * |--------------------------------------------------------------------------
  */
-(Snow\Database::define(
-    env('DB_CONNECTION', 'mysql'),
+(new Snow\Database(
+    env('DB_DRIVER', 'mysql'),
     env('DB_HOST', '127.0.0.1'),
     env('DB_PORT', '3306'),
     env('DB_DATABASE', 'test'),
@@ -72,7 +72,7 @@ date_default_timezone_set(env('APP_TIMEZONE'));
  */
 $router = new Snow\Router(env('APP_URL'));
 
-require __DIR__ . '/../routes/web.php';
-require __DIR__ . '/../routes/api.php';
+// require __DIR__ . '/../routes/web.php';
+// require __DIR__ . '/../routes/api.php';
 
 return $router;
