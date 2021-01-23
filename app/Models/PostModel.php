@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CoffeeCode\DataLayer\DataLayer;
+use Exception;
 
 class PostModel extends DataLayer
 {
