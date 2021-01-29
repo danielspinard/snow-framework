@@ -7,12 +7,14 @@
         <div class="p-3"></div>
 
         <div class="row row-cols-1 row-cols-md-3 g-4">
-            @foreach($posts as $post)
+            @forelse($posts as $post)
                 @component('components.post')
                     @slot('title', $post->title)
                     @slot('content', $post->content)
                 @endcomponent
-            @endforeach
+            @empty
+                <h4>Sorry!, We didn't find any post!</h4>
+            @endforelse
         </div>
         
         <div class="p-3"></div>
