@@ -55,7 +55,7 @@ class Session
      */
     public function set(string $key, $value): Session
     {
-        // TODO
+        $_SESSION[$key] = (is_array($value) ? (object)$value : $value);
         return $this;
     }
 
