@@ -10,6 +10,8 @@ if (!function_exists('env')) {
      */
     function env(string $var, ?string $defaultVarValue = null): ?string
     {
+        $var = strtoupper($var);
+
         if (isset($_ENV[$var]) and $_ENV[$var] != null)
             return $_ENV[$var];
 
