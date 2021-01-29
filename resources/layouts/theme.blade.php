@@ -13,7 +13,7 @@
         >
     @stack('style')
 
-    <title>{{ $titlePage }}</title>
+    <title>{{ $title_page ?? env('APP_NAME') }}</title>
 </head>
 
 <body>
