@@ -12,14 +12,8 @@ require __DIR__ . '/../vendor/autoload.php';
  * | Loads all environment variables
  * |--------------------------------------------------------------------------
  */
-$repository = Dotenv\Repository\RepositoryBuilder::createWithNoAdapters()
-    ->addAdapter(Dotenv\Repository\Adapter\EnvConstAdapter::class)
-    ->addWriter(Dotenv\Repository\Adapter\PutenvAdapter::class)
-    ->immutable()
-    ->make();
-
-(Dotenv\Dotenv::create(
-    $repository, __DIR__ . '/../.'
+(Dotenv\Dotenv::createMutable(
+    __DIR__ . '/../.'
 ))->load();
 
 /**
@@ -35,14 +29,7 @@ if (appDebug())
  * | Load the defines needed to establish a connection to the datalayer
  * |--------------------------------------------------------------------------
  */
-(new Snow\Database(
-    env('DB_DRIVER', 'mysql'),
-    env('DB_HOST', '127.0.0.1'),
-    env('DB_PORT', '3306'),
-    env('DB_DATABASE', 'test'),
-    env('DB_USERNAME', 'root'),
-    env('DB_PASSWORD', 'root')
-));
+(new Snow\Database());
 
 /**
  * |--------------------------------------------------------------------------
@@ -60,19 +47,32 @@ date_default_timezone_set(env('APP_TIMEZONE'));
 
 /**
  * |--------------------------------------------------------------------------
- * | Start bladeone template engine
+ * | Create bladeone template engine
  * |--------------------------------------------------------------------------
  */
 (new Snow\Engine());
 
 /*
  * |--------------------------------------------------------------------------
+ * | Start router http dispatcher
+ * |--------------------------------------------------------------------------
+ */
+$router = (new Snow\Router(env('APP_URL')));
+
+/*
+ * |--------------------------------------------------------------------------
  * | Load the application routes
  * |--------------------------------------------------------------------------
  */
-$router = new Snow\Router(env('APP_URL'));
+if (file_exists($routesWebFile = __DIR__ . '/../routes/web.php'))
+    require $routesWebFile;
 
-// require __DIR__ . '/../routes/web.php';
-// require __DIR__ . '/../routes/api.php';
+if (file_exists($routesApiFile = __DIR__ . '/../routes/api.php'))
+    require $routesApiFile;
 
+/*
+ * |--------------------------------------------------------------------------
+ * | Return the router dispatcher application
+ * |--------------------------------------------------------------------------
+ */
 return $router;
