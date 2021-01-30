@@ -39,6 +39,24 @@ if (!function_exists('view')) {
     }
 }
 
+if (!function_exists('dd')) {
+    /**
+     * @param mixed $var
+     * @return mixed
+     */
+    function dd(mixed $toDump)
+    {
+        array_map(
+            function ($toMap) { 
+                dump($toDump); 
+            },
+            func_get_args()
+        );
+        
+        die;
+    }
+}
+
 if (!function_exists('session')) {
     /**
      * @param string $name
