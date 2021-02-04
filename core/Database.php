@@ -68,6 +68,9 @@ class Database
         $this->define();
     }
 
+    /**
+     * @return PDOException|null
+     */
     private function supportedDriver()
     {
         $supported = [
@@ -90,7 +93,10 @@ class Database
             );
     }
 
-    public function define()
+    /**
+     * @return Database
+     */
+    public function define(): Database
     {
         define("DATA_LAYER_CONFIG", [
             "driver" => $this->driver,
@@ -101,5 +107,7 @@ class Database
             "passwd" => $this->password,
             "options" => $this->options
         ]);
+
+        return $this;
     }
 }
