@@ -26,6 +26,11 @@ class Engine
         return $this;
     }
 
+    /**
+     * @param string $view
+     * @param array|null $data
+     * @return void
+     */
     public function render(string $view, ?array $data)
     {
         return $this->blade->setView($view)->share($data)->run();
