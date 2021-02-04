@@ -12,7 +12,6 @@ $app = require __DIR__ . '/../bootstrap/app.php';
  * | Handle the request here before the controller is executed.
  * |--------------------------------------------------------------------------
  */
-// (new Container())->sessionSecurty();
 
 /*
  * |--------------------------------------------------------------------------
