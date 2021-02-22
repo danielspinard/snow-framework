@@ -9,10 +9,11 @@ abstract class Controller
     /**
      * @param string $view
      * @param array|null $data
+     * @param string $customPath
      * @return void
      */
-    protected function render(string $view, ?array $data = [])
+    protected function render(string $view, ?array $data = [], string $customPath = 'views'): void
     {
-        echo (Engine::class)->render('views.' . $view, $data);
+        echo (new Engine)->render($customPath . '.' . $view, $data);
     }
 }
