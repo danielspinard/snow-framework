@@ -4,11 +4,12 @@
             <div class="card-image-background">
                 {{-- <img src="src/img/" class="card-image"> --}}
             </div>
-            <p 
-                class="card-title mb-0"
+            <a
+                href="{{ $id }}"
+                class="card-title text-dark text-decoration-none mb-0"
             >
                 {{ $title }}
-            </p>
+            </a>
             <p class="card-text">
                 {{ $content }}
             </p>
