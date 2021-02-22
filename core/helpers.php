@@ -29,16 +29,6 @@ if (!function_exists('appDebug')) {
     }
 }
 
-if (!function_exists('view')) {
-    /**
-     * @return bool
-     */
-    function view(string $view, ?array $data = []): void
-    {
-        echo (new Engine())->render('views.' . $view, $data);
-    }
-}
-
 if (!function_exists('dd')) {
     /**
      * @param mixed $var
@@ -54,6 +44,16 @@ if (!function_exists('dd')) {
         );
         
         die;
+    }
+}
+
+if (!function_exists('view')) {
+    /**
+     * @return bool
+     */
+    function view(string $view, ?array $data = []): void
+    {
+        echo (new Engine())->render('views.' . $view, $data);
     }
 }
 
@@ -93,5 +93,16 @@ if (!function_exists('csrf_verify')) {
             return false;
 
         return true;
+    }
+}
+
+if (!function_exists('asset')) {
+    /**
+     * @param string $file
+     * @return void
+     */
+    function asset(string $file)
+    {
+        return env('APP_URL') . '/assets/' . $file . '?time=' . time();
     }
 }
