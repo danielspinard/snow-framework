@@ -31,12 +31,27 @@ class Exception
     ];
 
     /**
+     * @param int $code
      * @return array|null
      */
     private static function getHttpConst(int $code): ?array
     {
         $const = Exception::class . '::HTTP_' . $code;
+
         return (defined($const))? constant($const) : null;
+    }
+
+    /**
+     * @param Router $router
+     * @param int $httpErrorCode
+     * @return void
+     */
+    private static function catchingHttpError(Router $router, int $httpErrorCode)
+    {
+        if(!is_null($httpError = self::getHttpConst($httpErrorCode)))
+            return self::errorView($httpError);
+
+        return $router->redirect('error.http', ['httpErrorCode' => 404]);
     }
 
     /**
@@ -45,15 +60,9 @@ class Exception
      */
     public static function handleRouterHttpError(Router $router)
     {
-        $router->group("error");
-        $router->get("/{httpErrorCode}", function ($data) use ($router) {
-            $code = (int) $data['httpErrorCode'];
-            $httpError = (self::getHttpConst($code));
-
-            if(is_null($httpError))
-                return $router->redirect('error.http', ['httpErrorCode' => 404]);
-
-            return self::errorView($httpError);
+        $router->group('error');
+        $router->get('/{httpErrorCode}', function (array $data) use ($router) {
+            self::catchingHttpError($router, (int) $data['httpErrorCode']);
         }, 'error.http');
     }
 
