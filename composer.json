@@ -1,5 +1,6 @@
 {
-    "name": "danielspinard/framework",
+    "name": "danielspinard/snow-mvc",
+    "description": "structure that i use to develop my personal projects and apply new knowledge.",
     "authors": [
         {
             "name": "Daniel M.",
