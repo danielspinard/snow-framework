@@ -33,10 +33,9 @@ class Exception
     /**
      * @return array|null
      */
-    public static function getHttpConst(int $code): ?array
+    private static function getHttpConst(int $code): ?array
     {
         $const = Exception::class . '::HTTP_' . $code;
-        
         return (defined($const))? constant($const) : null;
     }
 
@@ -74,6 +73,7 @@ class Exception
      */
     private static function errorView(array $httpError)
     {
-        include 'view/error.view.min.php';
+        http_response_code($httpError['code']);
+        die(include 'view/error.view.min.php');
     }
 }
