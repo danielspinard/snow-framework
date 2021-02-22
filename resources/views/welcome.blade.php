@@ -9,6 +9,7 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
             @forelse($posts as $post)
                 @component('components.post')
+                    @slot('id', $post->post_id)
                     @slot('title', $post->title)
                     @slot('content', $post->content)
                 @endcomponent
