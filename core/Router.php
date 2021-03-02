@@ -68,6 +68,7 @@ class Router extends RouterComponent
 
     public function run()
     {
+        Redirect::router($this);
         Exception::handleRouterHttpError($this);
         $this->dispatch();
         Exception::dispatchRouterHttpError($this);
