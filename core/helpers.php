@@ -2,6 +2,7 @@
 
 use Snow\Session;
 use Snow\Engine;
+use Snow\Redirect;
 
 if (!function_exists('env')) {
     /**
@@ -104,5 +105,17 @@ if (!function_exists('asset')) {
     function asset(string $file)
     {
         return env('APP_URL') . '/assets/' . $file . '?time=' . time();
+    }
+}
+
+if (!function_exists('redirect')) {
+    /**
+     * @param string $route
+     * @param array $data
+     * @return void
+     */
+    function redirect(string $route, array $data = [])
+    {
+        return Redirect::route($route, $data)::run();
     }
 }
