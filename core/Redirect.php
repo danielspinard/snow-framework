@@ -15,51 +15,42 @@ class Redirect
     private static $route;
 
     /**
-     * @return Router
+     * @var array
      */
-    private static function router(): Router
-    {
-        if (self::$router == null)
-            self::$router = new Router(env('APP_URL'));
-        
-        return self::$router;
-    }
+    private static $data;
 
     /**
-     * Set route to redirect
-     * 
-     * @param string $route
+     * @param Router $router
      * @return Redirect
      */
-    public static function route(string $route): Redirect
+    public static function router(Router $router): Redirect
     {
-        self::$route = self::router()->route($route);
-        return (new Redirect());
+        if (self::$router === null)
+            self::$router = $router;
+        
+        return (new Redirect);
     }
 
     /**
-     * Run route (redirect)
-     * 
+     * @param string $route
+     * @param array $data
+     * @return Redirect
+     */
+    public static function route(string $route, array $data = []): Redirect
+    {
+        self::$route = self::$router->route($route, $data);
+
+        return (new Redirect);
+    }
+
+    /**
      * @return void
      */
     public static function run()
     {
         if(self::$route != null)
-            return self::router()->redirect(self::$route);
+            return self::$router->redirect(self::$route);
 
-        self::router()->redirect("error/404");
-    }
-
-    /**
-     * Set flash session
-     *
-     * @param string $type
-     * @param string $message
-     * @return void
-     */
-    public static function flash(string $type, string $message)
-    {
-        // set session flash
-        return self::run();
+        self::$router->redirect('error.http', ['httpErrorCode' => 404]);
     }
 }
