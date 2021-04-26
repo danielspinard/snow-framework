@@ -45,7 +45,8 @@ class Database
     ];
 
     /**
-     * @param boolean $connect
+     * @param bool $connect
+     * @return void
      */
     public function __construct(bool $connect = true)
     {
@@ -60,14 +61,14 @@ class Database
         $this->username = env('DB_USERNAME', 'root');
         $this->password = env('DB_PASSWORD', 'root');
 
-        $this->supportedDriver();
+        $this->driver();
         $this->define();
     }
 
     /**
-     * @return PDOException|null
+     * @return void
      */
-    private function supportedDriver()
+    private function driver(): void
     {
         $supported = [
             'mysql',
@@ -89,20 +90,18 @@ class Database
     }
 
     /**
-     * @return Database
+     * @return void
      */
-    public function define(): Database
+    private function define(): void
     {
-        define("DATA_LAYER_CONFIG", [
-            "driver" => $this->driver,
-            "host" => $this->host,
-            "port" => $this->port,
-            "dbname" => $this->name,
-            "username" => $this->username,
-            "passwd" => $this->password,
-            "options" => $this->options
+        define('DATA_LAYER_CONFIG', [
+            'driver' => $this->driver,
+            'host' => $this->host,
+            'port' => $this->port,
+            'dbname' => $this->name,
+            'username' => $this->username,
+            'passwd' => $this->password,
+            'options' => $this->options
         ]);
-
-        return $this;
     }
 }
