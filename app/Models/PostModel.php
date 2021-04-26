@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use CoffeeCode\DataLayer\DataLayer;
 use Exception;
+use CoffeeCode\DataLayer\DataLayer;
+use Snow\Validator;
 
 class PostModel extends DataLayer
 {
@@ -13,11 +14,11 @@ class PostModel extends DataLayer
     public function __construct()
     {
         parent::__construct(
-            "posts",
+            'posts',
             [
-                "title", "content"
+                'title', 'content'
             ], 
-            "post_id",
+            'post_id',
             false
         );
     }
@@ -43,8 +44,15 @@ class PostModel extends DataLayer
      */
     private function validateTitle(): bool
     {
-        if(strlen($this->title) < 5 || strlen($this->title) > 50) {
-            $this->fail = new Exception("The title of the post must contain between 5 and 50 characters!");
+        $rules = ['min' => 5, 'max' => 50];
+
+        if (!Validator::length($this->title, $rules['min'], $rules['max'])) {
+            $this->fail = new Exception('The title of the post must contain between ' . $rules['min'] . ' and ' . $rules['max'] . ' characters!');
+            return false;
+        }
+
+        if (!Validator::alphanum($this->title)) {
+            $this->fail = new Exception('The title cannot contain special characters!');
             return false;
         }
         
@@ -56,8 +64,10 @@ class PostModel extends DataLayer
      */
     private function validateContent(): bool
     {
-        if(strlen($this->content) < 5 || strlen($this->content) > 255) {
-            $this->fail = new Exception("The content of the post must contain between 5 and 255 characters!");
+        $rules = ['min' => 5, 'max' => 255];
+
+        if(!Validator::length($this->content, $rules['min'], $rules['max'])) {
+            $this->fail = new Exception('The content of the post must contain between ' . $rules['min'] . ' and ' . $rules['max'] . ' characters!');
             return false;
         }
 
