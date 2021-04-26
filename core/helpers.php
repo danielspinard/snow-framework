@@ -2,7 +2,6 @@
 
 use Snow\Session;
 use Snow\Engine;
-use Snow\Redirect;
 
 if (!function_exists('env')) {
     /**
@@ -32,7 +31,6 @@ if (!function_exists('appDebug')) {
     }
 }
 
-<<<<<<< HEAD
 if (!function_exists('view')) {
     /**
      * @param string $view
@@ -46,8 +44,6 @@ if (!function_exists('view')) {
     }
 }
 
-=======
->>>>>>> 18f2e8eb151815b768d28ff5a00da2ec70eb5a92
 if (!function_exists('dd')) {
     /**
      * @param mixed $toDump
@@ -60,16 +56,6 @@ if (!function_exists('dd')) {
                 dump($toDump); 
             }, func_get_args()
         ));
-    }
-}
-
-if (!function_exists('view')) {
-    /**
-     * @return bool
-     */
-    function view(string $view, ?array $data = []): void
-    {
-        echo (new Engine())->render('views.' . $view, $data);
     }
 }
 
@@ -87,10 +73,13 @@ if (!function_exists('csrf_input')) {
     /**
      * @return string
      */
-    function csrf_input(): string
+    function csrf_input(bool $double = false): string
     {
-        session()->csrf();
-        return '<input type="hidden" name="csrf" value="' . (session()->csrf_token ?? "") .  '" />';
+        if ($double === false) {
+            session()->csrf();
+        }
+
+        return '<input type="hidden" name="csrf" value="' . (session()->csrf_token ?? '') .  '" />';
     }
 }
 
@@ -113,7 +102,6 @@ if (!function_exists('csrf_verify')) {
     }
 }
 
-<<<<<<< HEAD
 if (!function_exists('request_method')) {
     /**
      * @param string $method
@@ -136,27 +124,14 @@ if (!function_exists('route')) {
         return $GLOBALS['router']->route($route, $data);
     }
 }
-=======
-if (!function_exists('asset')) {
-    /**
-     * @param string $file
-     * @return void
-     */
-    function asset(string $file)
-    {
-        return env('APP_URL') . '/assets/' . $file . '?time=' . time();
-    }
-}
 
-if (!function_exists('redirect')) {
+if (!function_exists('bind')) {
     /**
-     * @param string $route
-     * @param array $data
-     * @return void
+     * @param array $query
+     * @return string
      */
-    function redirect(string $route, array $data = [])
+    function bind(array $query): string
     {
-        return Redirect::route($route, $data)::run();
+        return http_build_query($query);
     }
 }
->>>>>>> 18f2e8eb151815b768d28ff5a00da2ec70eb5a92

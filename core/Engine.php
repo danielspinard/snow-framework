@@ -4,9 +4,6 @@ namespace Snow;
 
 use eftec\bladeone\BladeOne as Blade;
 use \Exception;
-use function dirname;
-use function str_replace;
-use function file_exists;
 
 class Engine
 {

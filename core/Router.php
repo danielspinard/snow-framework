@@ -73,11 +73,6 @@ class Router extends RouterComponent
      */
     public function run()
     {
-<<<<<<< HEAD
-=======
-        Redirect::router($this);
-        Exception::handleRouterHttpError($this);
->>>>>>> 18f2e8eb151815b768d28ff5a00da2ec70eb5a92
         $this->dispatch();
 
         if ($this->error() !== null) {

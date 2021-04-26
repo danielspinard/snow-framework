@@ -3,13 +3,9 @@
 namespace Snow\Base;
 
 use Snow\Engine;
-<<<<<<< HEAD
 use Snow\Router;
 use Snow\Request;
 use \Exception;
-=======
-use Snow\Redirect;
->>>>>>> 18f2e8eb151815b768d28ff5a00da2ec70eb5a92
 
 abstract class Controller
 {
@@ -34,8 +30,8 @@ abstract class Controller
     public function __construct(Router $router)
     {
         $this->router = $router;
-        $this->request = new Request;
-        $this->blade = new Engine;
+        $this->request = new Request();
+        $this->blade = new Engine();
     }
 
     /**
@@ -56,8 +52,7 @@ abstract class Controller
 
     /**
      * @param string $view
-     * @param array $data
-     * @param string $customPath
+     * @param array|null $data
      * @return void
      * @throws Exception
      */
@@ -71,24 +66,8 @@ abstract class Controller
      * @param array $data
      * @return void
      */
-<<<<<<< HEAD
     protected function redirect(string $route, array $data = []): void
     {
         $this->router->redirect($route, $data);
-=======
-    protected function render(string $view, array $data = [], string $customPath = 'views'): void
-    {
-        echo (new Engine())->render($customPath . '.' . $view, $data);
-    }
-
-    /**
-     * @param string $route
-     * @param array $data
-     * @return void
-     */
-    protected function redirect(string $route, array $data = [])
-    {
-        Redirect::route($route, $data)::run();
->>>>>>> 18f2e8eb151815b768d28ff5a00da2ec70eb5a92
     }
 }

@@ -49,7 +49,7 @@ class Session
      */
     public function all(): object
     {
-        return (object)$_SESSION;
+        return (object) $_SESSION;
     }
 
     /**

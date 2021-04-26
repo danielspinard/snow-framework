@@ -3,10 +3,6 @@
 namespace Snow;
 
 use StdClass;
-use function htmlspecialchars;
-use function str_replace;
-use function trim;
-use function getallheaders;
 
 class Request
 {
@@ -16,7 +12,7 @@ class Request
      */
     public function purify(string $string): ?string
     {
-        return trim(htmlspecialchars($string));
+        return htmlspecialchars($string);
     }
 
     /**
@@ -48,6 +44,7 @@ class Request
     public function headers(): object
     {
         $headers = new StdClass;
+        $headers->method = $_SERVER['REQUEST_METHOD'];
 
         foreach (getallheaders() as $header => $value) {
             $headers->{$this->validAttribute($header)} = $value;
