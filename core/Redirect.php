@@ -17,6 +17,7 @@ class Redirect
     /**
      * @var array
      */
+<<<<<<< HEAD
     private $data;
 
     /**
@@ -29,6 +30,20 @@ class Redirect
         }
         
         return $this->router;
+=======
+    private static $data;
+
+    /**
+     * @param Router $router
+     * @return Redirect
+     */
+    public static function router(Router $router): Redirect
+    {
+        if (self::$router === null)
+            self::$router = $router;
+        
+        return (new Redirect);
+>>>>>>> 18f2e8eb151815b768d28ff5a00da2ec70eb5a92
     }
 
     /**
@@ -36,12 +51,20 @@ class Redirect
      * @param array $data
      * @return Redirect
      */
+<<<<<<< HEAD
     public function route(string $route, array $data = []): Redirect
     {
         $this->route = $route;
         $this->data = $data;
 
         return $this;
+=======
+    public static function route(string $route, array $data = []): Redirect
+    {
+        self::$route = self::$router->route($route, $data);
+
+        return (new Redirect);
+>>>>>>> 18f2e8eb151815b768d28ff5a00da2ec70eb5a92
     }
 
     /**
@@ -49,6 +72,7 @@ class Redirect
      */
     public function run(): void
     {
+<<<<<<< HEAD
         $this->router->redirect($this->route, $this->data);
     }
 
@@ -65,5 +89,11 @@ class Redirect
         ]);
 
         $this->run();
+=======
+        if(self::$route != null)
+            return self::$router->redirect(self::$route);
+
+        self::$router->redirect('error.http', ['httpErrorCode' => 404]);
+>>>>>>> 18f2e8eb151815b768d28ff5a00da2ec70eb5a92
     }
 }

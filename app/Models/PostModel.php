@@ -23,8 +23,8 @@ class PostModel extends DataLayer
     {
         if(
             !$this->validateTitle() 
-            or !$this->validateContent() 
-            or !parent::save()
+            || !$this->validateContent() 
+            || !parent::save()
         )
             return false;
             
@@ -35,7 +35,7 @@ class PostModel extends DataLayer
     {
         if(
             strlen($this->title) > 5
-            and strlen($this->title) < 50
+            && strlen($this->title) < 50
         )
             return true;
 
@@ -47,7 +47,7 @@ class PostModel extends DataLayer
     {
         if(
             strlen($this->content) > 5
-            and strlen($this->content) < 255
+            && strlen($this->content) < 255
         )
             return true;
 

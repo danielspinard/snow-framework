@@ -11,13 +11,14 @@ class WebController extends Controller
     public function index()
     {
         $posts = (new PostModel())->find()->order('title')->fetch(true) ?? [];
-        
+
         return $this->render('welcome', [
             'posts' => $posts
         ]);
     }
 
     public function show(array $data)
+<<<<<<< HEAD
     {
         dd((new PostModel)->findById($data['id']));
     }
@@ -31,5 +32,10 @@ class WebController extends Controller
         // Bootstrap::make('Test');
         dump(Bootstrap::$core);
         // ($this->redirect('app.show', ['id' => 404]));
+=======
+    {
+        $post = (new PostModel())->findById($data['id']);
+        dd($post);
+>>>>>>> 18f2e8eb151815b768d28ff5a00da2ec70eb5a92
     }
 }
