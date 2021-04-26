@@ -2,7 +2,11 @@
 
 namespace Snow;
 
+use Exception;
 use CoffeeCode\Uploader\Image;
+use function md5;
+use function uniqid;
+use function time;
 
 class Uploader
 {
