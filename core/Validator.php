@@ -1,6 +1,6 @@
 <?php
 
-namespace Snow\Base;
+namespace Snow;
 
 use function ctype_alnum;
 use function strlen;
