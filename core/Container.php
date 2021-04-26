@@ -9,38 +9,30 @@ class Container
 {
     /**
      * @param string $class
-     * @return boolean
+     * @return object|null
      */
-    public static function classExists(string $class): bool
+    private static function getClass(string $class): ?object
     {
-        return class_exists($class);
+        return (class_exists($class) ? new $class() : null);
     }
 
     /**
-     * @param string $class
+     * @param string $model
      * @param string $namespace
      * @return object|null
      */
-    public static function getModel(string $class, ?string $namespace = '\\App\\Models\\'): ?object
+    public static function getModel(string $model, ?string $namespace = '\\App\\Models\\'): ?object
     {
-        if(self::classExists($model = $namespace . ucfirst($class))) {
-            return new $model();
-        }
-        
-        return null;
+        return self::getClass($namespace . ucfirst($model));
     }
 
     /**
-     * @param string $class
+     * @param string $facade
      * @param string $namespace
      * @return object|null
      */
-    public static function getFacade(string $class, ?string $namespace = '\\App\\Facades\\'): ?object
+    public static function getFacade(string $facade, ?string $namespace = '\\App\\Facades\\'): ?object
     {
-        if(self::classExists($facade = $namespace . ucfirst($class))) {
-            return new $facade();
-        }
-        
-        return null;
+        return self::getClass($namespace . ucfirst($facade));
     }
 }
