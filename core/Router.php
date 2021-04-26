@@ -3,23 +3,25 @@
 namespace Snow;
 
 use CoffeeCode\Router\Dispatch as RouterComponent;
-use Snow\Router\Exception;
+use function dirname;
 
 class Router extends RouterComponent
 {
     /**
      * @param string $appUrl
-     * @param null|string $separator
+     * @param string $separator
      */
-    public function __construct(string $appUrl, ?string $separator = "@")
+    public function __construct(string $appUrl, string $separator = "@")
     {
         parent::__construct($appUrl, $separator);
+        $this->load();
     }
 
     /**
      * @param string $route
-     * @param $handler
-     * @param string|null $name
+     * @param string|callback  $handler
+     * @param string $name
+     * @return void
      */
     public function post(string $route, $handler, string $name = null): void
     {
@@ -28,7 +30,7 @@ class Router extends RouterComponent
 
     /**
      * @param string $route
-     * @param $handler
+     * @param string|callback $handler
      * @param string|null $name
      */
     public function get(string $route, $handler, string $name = null): void
@@ -38,7 +40,7 @@ class Router extends RouterComponent
 
     /**
      * @param string $route
-     * @param $handler
+     * @param string|callback $handler
      * @param string|null $name
      */
     public function put(string $route, $handler, string $name = null): void
@@ -48,7 +50,7 @@ class Router extends RouterComponent
 
     /**
      * @param string $route
-     * @param $handler
+     * @param string|callback $handler
      * @param string|null $name
      */
     public function patch(string $route, $handler, string $name = null): void
@@ -58,7 +60,7 @@ class Router extends RouterComponent
 
     /**
      * @param string $route
-     * @param $handler
+     * @param string|callback $handler
      * @param string|null $name
      */
     public function delete(string $route, $handler, string $name = null): void
@@ -66,10 +68,25 @@ class Router extends RouterComponent
         $this->addRoute('DELETE', $route, $handler, $name);
     }
 
+    /**
+     * @return void
+     */
     public function run()
     {
-        Exception::handleRouterHttpError($this);
         $this->dispatch();
-        Exception::dispatchRouterHttpError($this);
+
+        if ($this->error() !== null) {
+            return (new HttpErrorHandler($this->error()));
+        }
+    }
+
+    /**
+     * @return void
+     */
+    private function load(): void
+    {
+        $router = $this;
+        require dirname(__DIR__, 1) . '/routes/web.php';
+        require dirname(__DIR__, 1) . '/routes/api.php';
     }
 }

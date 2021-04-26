@@ -7,59 +7,63 @@ class Redirect
     /**
      * @var Router
      */
-    private static $router;
+    private $router;
 
     /**
-     * @var string $route
+     * @var string
      */
-    private static $route;
+    private $route;
 
     /**
-     * @return Router
+     * @var array
      */
-    private static function router(): Router
+    private $data;
+
+    /**
+     * Redirect constructor
+     */
+    public function __construct()
     {
-        if (self::$router == null)
-            self::$router = new Router(env('APP_URL'));
+        if ($this->router === null) {
+            $this->router = new Router(env('APP_URL'));
+        }
         
-        return self::$router;
+        return $this->router;
     }
 
     /**
-     * Set route to redirect
-     * 
      * @param string $route
+     * @param array $data
      * @return Redirect
      */
-    public static function route(string $route): Redirect
+    public function route(string $route, array $data = []): Redirect
     {
-        self::$route = self::router()->route($route);
-        return (new Redirect());
+        $this->route = $route;
+        $this->data = $data;
+
+        return $this;
     }
 
     /**
-     * Run route (redirect)
-     * 
      * @return void
      */
-    public static function run()
+    public function run(): void
     {
-        if(self::$route != null)
-            return self::router()->redirect(self::$route);
-
-        self::router()->redirect("error/404");
+        $this->router->redirect($this->route, $this->data);
     }
 
     /**
-     * Set flash session
-     *
      * @param string $type
      * @param string $message
      * @return void
      */
-    public static function flash(string $type, string $message)
+    public function flash(string $type, string $message): void
     {
-        // set session flash
-        return self::run();
+        (new Session)->set('flash', [
+            'type' => $type,
+            'message' => $message
+        ]);
+
+        $this->run();
     }
 }

@@ -2,15 +2,18 @@
 
 namespace Snow;
 
+use function dirname;
+use function random_bytes;
 use function session_id;
 use function session_save_path;
-use function dirname;
 use function session_start;
 use function session_regenerate_id;
-use function random_bytes;
 
 class Session
 {
+    /**
+     * Session constructor
+     */
     public function __construct()
     {
         if (!session_id()) {
@@ -20,24 +23,25 @@ class Session
     }
 
     /**
-     * @param mixed $name
+     * @param mixed $key
      * @return mixed
      */
-    public function __get($name)
+    public function __get(string $key)
     {
-        if (!empty($_SESSION[$name]))
-            return $_SESSION[$name];
+        if (!empty($_SESSION[$key])) {
+            return $_SESSION[$key];
+        }
 
         return null;
     }
 
     /**
-     * @param mixed $name
+     * @param string $key
      * @return boolean
      */
-    public function __isset($name): bool
+    public function __isset(string $key): bool
     {
-        return $this->has($name);
+        return isset($_SESSION[$key]);
     }
 
     /**
@@ -55,7 +59,7 @@ class Session
      */
     public function set(string $key, $value): Session
     {
-        $_SESSION[$key] = (is_array($value) ? (object)$value : $value);
+        $_SESSION[$key] = (is_array($value) ? (object) $value : $value);
         return $this;
     }
 
@@ -67,15 +71,6 @@ class Session
     {
         unset($_SESSION[$key]);
         return $this;
-    }
-
-    /**
-     * @param string $key
-     * @return boolean
-     */
-    public function has(string $key): bool
-    {
-        return isset($_SESSION[$key]);
     }
 
     /**

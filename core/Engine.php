@@ -3,6 +3,10 @@
 namespace Snow;
 
 use eftec\bladeone\BladeOne as Blade;
+use \Exception;
+use function dirname;
+use function str_replace;
+use function file_exists;
 
 class Engine
 {
@@ -11,28 +15,39 @@ class Engine
      */
     private $blade;
 
+    /**
+     * Engine constructor.
+     */
     public function __construct()
     {
-        $this->blade = new Blade(
-            dirname(__DIR__, 1) . "/resources",
-            dirname(__DIR__, 1) . "/runtime/compile",
+        $blade = $this->blade = new Blade(
+            dirname(__DIR__, 1) . '/resources',
+            dirname(__DIR__, 1) . '/runtime/compile'
         );
 
-        $this->blade->setBaseUrl(env('APP_URL'));
-        $this->blade->setFileExtension(".blade.php");
-        $this->blade->setMode((appDebug())? Blade::MODE_DEBUG : Blade::MODE_FAST);
-        $this->blade->pipeEnable = true;
+        $blade->pipeEnable = true;
+        $blade->setMode((appDebug() ? Blade::MODE_SLOW : Blade::MODE_FAST));
+        $blade->setBaseUrl(env('APP_URL'));
+        $blade->setFileExtension(".blade.php");
+        $blade->setOptimize(true);
 
         return $this;
     }
 
     /**
      * @param string $view
-     * @param array|null $data
-     * @return void
+     * @param array $data
+     * @return string
+     * @throws Exception
      */
-    public function render(string $view, ?array $data)
+    public function render(string $view, array $data = []): string
     {
+        $file = '/resources/' . str_replace('.', '/', $view) . '.blade.php';
+
+        if (!file_exists(dirname(__DIR__, 1) . $file)) {
+            throw new EngineException('View not be found in ' . $file);
+        }
+
         return $this->blade->setView($view)->share($data)->run();
     }
 }

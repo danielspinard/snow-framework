@@ -45,19 +45,15 @@ class Database
     ];
 
     /**
-     * @var PDO
-     */
-    private $instace;
-
-    /**
      * @param boolean $connect
      */
     public function __construct(bool $connect = true)
     {
-        if (!$connect)
+        if (!$connect) {
             return;
+        }
 
-        $this->driver =  env('DB_DRIVER', 'mysql');
+        $this->driver = env('DB_DRIVER', 'mysql');
         $this->host = env('DB_HOST', '127.0.0.1');
         $this->port = env('DB_PORT', '3306');
         $this->name = env('DB_DATABASE', 'test');
@@ -87,10 +83,9 @@ class Database
             'informix'
         ];
 
-        if (!in_array($this->driver, $supported))
-            throw new \PDOException(
-                'Driver PDO not supported, driver: ' . $this->driver
-            );
+        if (!in_array($this->driver, $supported)) {
+            throw new \PDOException('Driver PDO not supported, driver: ' . $this->driver);
+        }
     }
 
     /**
