@@ -37,7 +37,7 @@ abstract class Controller
     /**
      * @return object|null
      */
-    private function request(): ?object
+    protected function request(): ?object
     {
         $request = (new Request());
 
