@@ -18,6 +18,14 @@ class Router extends RouterComponent
     }
 
     /**
+     * @return array
+     */
+    public function data(): array
+    {
+        return $this->route['data'];
+    }
+
+    /**
      * @param string $route
      * @param string|callback  $handler
      * @param string $name
