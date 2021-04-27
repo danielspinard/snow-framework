@@ -27,6 +27,21 @@ class Request
     /**
      * @return object
      */
+    public function headers(): object
+    {
+        $headers = new StdClass;
+        $headers->method = $_SERVER['REQUEST_METHOD'];
+
+        foreach (getallheaders() as $header => $value) {
+            $headers->{$this->validAttribute($header)} = $value;
+        }
+
+        return $headers;
+    }
+
+    /**
+     * @return object
+     */
     public function body(): object
     {
         $body = new StdClass;
@@ -41,15 +56,14 @@ class Request
     /**
      * @return object
      */
-    public function headers(): object
+    public function files(): object
     {
-        $headers = new StdClass;
-        $headers->method = $_SERVER['REQUEST_METHOD'];
+        $files = new StdClass;
 
-        foreach (getallheaders() as $header => $value) {
-            $headers->{$this->validAttribute($header)} = $value;
+        foreach ($_FILES as $key => $value) {
+            $files->$key = $value;
         }
 
-        return $headers;
+        return $files;
     }
 }
