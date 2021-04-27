@@ -17,12 +17,12 @@ abstract class Controller
     /**
      * @var Request
      */
-    private $request;
+    protected $request;
 
     /**
      * @var Engine
      */
-    private $blade;
+    protected $blade;
 
     /**
      * @param Router $router
@@ -30,21 +30,19 @@ abstract class Controller
     public function __construct(Router $router)
     {
         $this->router = $router;
-        $this->request = new Request();
+        $this->request = $this->request();
         $this->blade = new Engine();
     }
 
     /**
-     * @param array $data
      * @return object|null
      */
-    protected function request(array $data = []): ?object
+    private function request(): ?object
     {
-        $request = $this->request->body();
-        $request->headers = $this->request->headers();
+        $request = (new Request());
 
-        foreach ($data as $key => $value) {
-            $request->$key = $this->request->purify($value);
+        foreach ($this->router->data() as $key => $value) {
+            $request->$key = $request->purify($value);
         }
 
         return $request;
