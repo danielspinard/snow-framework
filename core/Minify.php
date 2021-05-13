@@ -41,4 +41,24 @@ class Minify
 
         return $minifier;
     }
+
+    /**
+     * @param string $type
+     * @param string $output
+     * @return string
+     */
+    public function run(string $type, string $output): string
+    {
+        $minifier = '\MatthiasMullie\Minify\\' . strtoupper($type);
+
+        if (!class_exists($minifier)) {
+            throw new InvalidArgumentException('Unsupported minification file type.');
+        }
+
+        $minifier = $this->scandir(new $minifier(), $type);
+        $output = $this->basedir[$type] . $output;
+        $minifier->minify($output);
+
+        return $output;
+    }
 }
