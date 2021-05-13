@@ -32,4 +32,26 @@ class Validator
         
         return false;
     }
+
+    /**
+     * @param string $string
+     * @param array $domains
+     * @return bool
+     */
+    public static function email(string $string, array $whitelist = []): bool
+    {
+        if (empty($whitelist)) {
+            return filter_var($string, FILTER_VALIDATE_EMAIL);
+        }
+        
+        $email = explode('@', $string);
+
+        foreach ($whitelist as $domain) {
+            if ($email[1] === $domain) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
