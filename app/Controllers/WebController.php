@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use Snow\Base\Controller;
 use Snow\Uploader;
+use Snow\Validator;
 use App\Models\PostModel;
 
 class WebController extends Controller
@@ -11,38 +12,30 @@ class WebController extends Controller
     /**
      * @return void
      */
-    public function index()
+    public function index(): void
     {
-        return $this->render('post.index', [
-            'posts' => (new PostModel())->find()->fetch(true)
+        $posts = (new PostModel())->find()->fetch(true);
+
+        $this->render('post.index', [
+            'posts' => $posts
         ]);
     }
 
     /**
      * @return void
      */
-    public function show()
+    public function show(): void
     {
         $post = (new PostModel)->findById($this->request()->id);
 
         if (!$post) {
-            return $this->redirect('app.index');
+            $this->render('post.show', [
+                'post' => $post->data()
+            ]);
+
+            return;
         }
-
-        return $this->render('post.show', ['post' => $post->data()]);
-    }
-
-    /**
-     * @return void
-     */
-    public function debug()
-    {
-        // save test
-        // $post = (new PostModel());
-        // $post->title;
-        // $post->content;
-        // $post->save();
-
-        // var_dump($post->fail());
+        
+        $this->redirect('app.index');
     }
 }
