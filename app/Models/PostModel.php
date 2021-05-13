@@ -28,7 +28,7 @@ class PostModel extends DataLayer
      */
     public function save(): bool
     {
-        if(
+        if (
             !$this->validateTitle() 
             || !$this->validateContent() 
             || !parent::save()
@@ -66,7 +66,7 @@ class PostModel extends DataLayer
     {
         $rules = ['min' => 5, 'max' => 255];
 
-        if(!Validator::length($this->content, $rules['min'], $rules['max'])) {
+        if (!Validator::length($this->content, $rules['min'], $rules['max'])) {
             $this->fail = new Exception('The content of the post must contain between ' . $rules['min'] . ' and ' . $rules['max'] . ' characters!');
             return false;
         }
