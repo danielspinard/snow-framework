@@ -22,6 +22,7 @@
         "coffeecode/router": "1.0.*",
         "coffeecode/datalayer": "1.1.*",
         "eftec/bladeone": "3.49.*",
-        "coffeecode/uploader": "1.0.*"
+        "coffeecode/uploader": "1.0.*",
+        "matthiasmullie/minify": "1.3.*"
     }
 }
