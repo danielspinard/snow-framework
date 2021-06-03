@@ -28,14 +28,14 @@ class WebController extends Controller
     {
         $post = (new PostModel)->findById($this->request()->id);
 
-        if (!$post) {
+        if ($post) {
             $this->render('post.show', [
                 'post' => $post->data()
             ]);
 
             return;
         }
-        
+
         $this->redirect('app.index');
     }
 }
