@@ -2,8 +2,10 @@
 
 namespace Snow;
 
+
 use PDO;
 use Exception;
+use Illuminate\Database\Capsule\Manager;
 use function define;
 use function in_array;
 
@@ -35,16 +37,6 @@ class Database
     private $username;
 
     /**
-     * @var array
-     */
-    private $options = [
-        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4",
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
-        PDO::ATTR_CASE => PDO::CASE_NATURAL
-    ];
-
-    /**
      * @param bool $connect
      * @return void
      */
@@ -61,47 +53,25 @@ class Database
         $this->username = env('DB_USERNAME', 'root');
         $this->password = env('DB_PASSWORD', 'root');
 
-        $this->driver();
-        $this->define();
+        $this->up(new Manager());
     }
 
     /**
      * @return void
      */
-    private function driver(): void
+    private function up(Manager $manager): void
     {
-        $supported = [
-            'mysql',
-            'pgsql',
-            'sqlite',
-            'oci',
-            'odbc',
-            'sqlsrv',
-            'cubrid',
-            'dblib',
-            'firebird',
-            'ibm',
-            'informix'
-        ];
-
-        if (!in_array($this->driver, $supported)) {
-            throw new \PDOException('Driver PDO not supported, driver: ' . $this->driver);
-        }
-    }
-
-    /**
-     * @return void
-     */
-    private function define(): void
-    {
-        define('DATA_LAYER_CONFIG', [
+        $manager->setAsGlobal();
+        $manager->bootEloquent();
+        $manager->addConnection([
             'driver' => $this->driver,
             'host' => $this->host,
-            'port' => $this->port,
-            'dbname' => $this->name,
+            'database' => $this->name,
             'username' => $this->username,
-            'passwd' => $this->password,
-            'options' => $this->options
+            'password' => $this->password,
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
         ]);
     }
 }
